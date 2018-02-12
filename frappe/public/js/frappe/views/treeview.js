@@ -70,7 +70,8 @@ frappe.views.TreeView = Class.extend({
 			"padding-bottom": "25px"
 		});
 
-		this.page.add_inner_button(__('Expand All'), function() {
+		//auto account number
+		this.page.add_inner_button(__('Expand All/Generate Auto Acct'), function() {
 			me.tree.rootnode.load_all();
 		});
 
@@ -272,6 +273,24 @@ frappe.views.TreeView = Class.extend({
 			});
 		});
 		d.show();
+		d.on_page_show = function(){
+		//auto account number
+		if (me.doctype=='Account') {
+			console.log(me.doctype)
+			frappe.call({
+							method: "erpnext.accounts.utils.get_new_account_number",
+							args: {
+									account_name: node.label,						
+									is_group: d.get_value("is_group")
+								},
+							callback: function(r, rt) {
+								d.set_value("account_number", r.message);
+							}
+						});
+		}
+		//auto account number
+
+		}
 	},
 	prepare_fields: function(){
 		var me = this;
