@@ -7,7 +7,7 @@ import json
 
 import frappe
 import frappe.share
-import frappe.utils
+import frappe.utils1
 from frappe import _
 from frappe.desk.doctype.notification_log.notification_log import (
 	enqueue_create_notification,
